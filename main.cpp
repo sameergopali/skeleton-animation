@@ -74,7 +74,6 @@ int main()
    
    
     
-  //  anim.loadAnimationTransform((float)glfwGetTime(),transformations);
 
     Shader sp("./shaders/vertex.glsl","./shaders/fragment.glsl");
     // render loop
