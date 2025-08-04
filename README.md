@@ -1,6 +1,7 @@
 # Skeleton Animation with OpenGL
 
 A C++ OpenGL application that demonstrates skeleton-based character animation using the Assimp library for 3D model loading and animation playback.
+![Demo](demo/demo-anim.gif)
 
 ## Features
 
@@ -47,7 +48,7 @@ skeleton-animation/
 ### System Requirements
 - C++11 or later compiler
 - OpenGL 3.3+ compatible graphics card
-- macOS, Linux, or Windows
+- macOS
 
 ## Building the Project
 
