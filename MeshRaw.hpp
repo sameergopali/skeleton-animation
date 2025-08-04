@@ -13,7 +13,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <string>
 #include "Shader.h"
-#include<glad/glad.h>
+#include "glad.h"
 
 #include <stdio.h>
 #define NUM_BONE_PER_VERTEX 4

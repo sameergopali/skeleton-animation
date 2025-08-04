@@ -1,4 +1,4 @@
-#include <glad/glad.h>
+#include "glad.h"
 #include <GLFW/glfw3.h>
 
 #include <glm/glm.hpp>
@@ -69,16 +69,14 @@ int main()
     }
     stbi_set_flip_vertically_on_load(true);
 
-    //Model model("/Users/logpoint/Documents/ogl/ogl/resource/backpack/backpack.obj",1);
-     Model model("/Users/logpoint/Downloads/ogldev-source/Content/boblampclean.md5mesh",1);
-    //  Model model("/Users/logpoint/ogl/resource/snake.dae",1);
-   // Animator anim("/Users/logpoint/ogl/resource/animX.dae");
+    Model model("./boblampclean.md5mesh",1);
+    Animator anim("./boblampclean.md5anim");
    
    
     
   //  anim.loadAnimationTransform((float)glfwGetTime(),transformations);
 
-    Shader sp("/Users/logpoint/Documents/ogl/ogl/vertex.glsl","/Users/logpoint/Documents/ogl/ogl/fragment.glsl");
+    Shader sp("./shaders/vertex.glsl","./shaders/fragment.glsl");
     // render loop
     // -----------
     glm::mat4 transM= glm::mat4(1.0f);
@@ -94,7 +92,7 @@ int main()
     mvp[0]=glm::perspective(glm::radians(30.0f), (float)SCR_WIDTH /(float)SCR_HEIGHT, 0.1f, 100.0f);
     mvp[1]=glm::mat4(1.0f);
 
-  //  model.boneTransform(transformations,"/Users/logpoint/Downloads/ogldev-source/Content/boblampclean.md5mesh");
+   //model.boneTransform(transformations,"./boblampclean.md5mesh");
     
     while (!glfwWindowShouldClose(window))
     {
