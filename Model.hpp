@@ -19,6 +19,9 @@
 #include <vector>
 #include "Animator.hpp"
 using namespace std;
+
+unsigned int TextureFromFile(const char *path, const string &directory, bool gamma = false);
+
 class Model{
 public:
  
@@ -37,6 +40,7 @@ public:
 private:
   
     std::vector<MeshRaw> meshesR;
+    std::vector<Texture> textures_loaded;
     
     void loadModelR(string path);
     
@@ -44,7 +48,7 @@ private:
     
     MeshRaw processMeshR(aiMesh *mesh, const aiScene *scene);
     
-
+    vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, string typeName);
 
     glm::mat4 globalInvereMat;
 

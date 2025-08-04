@@ -39,8 +39,6 @@ void Animator::loadAnimationTransform( float timeinSeconds, vector<glm::mat4> &T
                            pScene->mAnimations[0]->mTicksPerSecond : 25.0f;
     float TimeInTicks = timeinSeconds * TicksPerSecond;
     float AnimationTime = fmod(TimeInTicks, pScene->mAnimations[0]->mDuration);
-    cout << "timeinSeconds: "<< timeinSeconds <<" " << "animationtime: "<<AnimationTime;
-    cout <<"\nglobal mat" <<glm::to_string(globalTransform)<< endl;
     glm::mat4 identity(1);
     readAnimation(AnimationTime, mRootNode, identity);
     
@@ -54,7 +52,6 @@ void Animator::loadAnimationTransform( float timeinSeconds, vector<glm::mat4> &T
 void Animator::readAnimation( float AnimationTime, const aiNode *pNode, glm::mat4 &parentT){
     
     string nodeName(pNode->mName.data);
-    cout << nodeName << endl;
     glm::mat4 nodeTransformation = aiMatrix4x4ToGlm(pNode->mTransformation);
     const aiAnimation* anim= pScene->mAnimations[0];
     const aiNodeAnim * aNode = FindNodeAnim(anim,nodeName);

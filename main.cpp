@@ -45,7 +45,7 @@ int main()
 
     // glfw window creation
     // --------------------
-    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Skeleton Animation", NULL, NULL);
     if (window == NULL)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -67,7 +67,7 @@ int main()
         std::cout << "Failed to initialize GLAD" << std::endl;
         return -1;
     }
-    stbi_set_flip_vertically_on_load(true);
+    //stbi_set_flip_vertically_on_load(true);
 
     Model model("./boblampclean.md5mesh",1);
     Animator anim("./boblampclean.md5anim");
@@ -80,19 +80,16 @@ int main()
     // -----------
     glm::mat4 transM= glm::mat4(1.0f);
     transM= glm::translate(transM, glm::vec3(0.0f,3.33f,0.0f)  );
-    cout << glm::to_string(transM);
-    for(int k = 0; k<4;k++){
-        for(int j=0; j<4; j++){
-            cout <<"a["<<k <<"]"<<"["<<j<<"]" << transM[k][j]<< endl;
-        }
-    }
+  
     
     glm::mat4 mvp[3];
-    mvp[0]=glm::perspective(glm::radians(30.0f), (float)SCR_WIDTH /(float)SCR_HEIGHT, 0.1f, 100.0f);
+    mvp[0]=glm::perspective(glm::radians(30.0f), (float)SCR_WIDTH /(float)SCR_HEIGHT, 0.1f, 1000.0f);
     mvp[1]=glm::mat4(1.0f);
-
-   //model.boneTransform(transformations,"./boblampclean.md5mesh");
-    
+    glDisable(GL_CULL_FACE);
+    glFrontFace(GL_CCW); 
+    glCullFace(GL_BACK);
+    glEnable(GL_DEPTH_TEST);
+    float angle = 0.0f;
     while (!glfwWindowShouldClose(window))
     {
         // input
@@ -105,36 +102,37 @@ int main()
   
         // render
         // ------
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        
+        glClearColor(0.0f, 0.5f, 0.5f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
+        
         sp.use();
-        glm::mat4 projection = glm::perspective(glm::radians(60.0f), (float)SCR_WIDTH /(float)SCR_HEIGHT, 0.1f, 100.0f);
+        glm::mat4 projection = glm::perspective(glm::radians(60.0f), (float)SCR_WIDTH /(float)SCR_HEIGHT , 0.1f, 1000.0f);
         
         glm::mat4 view = camera.GetViewMatrix();
         sp.setMat4("projection", projection);
         sp.setMat4("view", view);
 
-        // render the loaded model
-     //   anim.loadAnimationTransform((float)glfwGetTime(),transformations);
 
         glm::mat4 modelM = glm::mat4(1.0f);
-       modelM = glm::translate(modelM, glm::vec3(0.0f, 0.0f, -50.0f)); // translate it down so it's at the center of the scene
-     //   modelM = glm::rotate(modelM,glm::radians(-90.0f), glm::vec3(1.0f,0.0f,0.0f));
-     //   modelM = glm::scale(modelM, glm::vec3(0.05f, 0.05f, 0.05f));
-      // modelM = glm::rotate(modelM, (float)glfwGetTime(), glm::vec3(0.0f, 1.0f, 0.0f));
+   
+        angle += 45* deltaTime; // degrees
+        if (angle > 360.0f) angle -= 360.0f;
+        modelM = glm::translate(modelM, glm::vec3(0.0f, -15.0f, -80.0f)); // translate it down so it's at the center of the scene
+        modelM = glm::rotate(modelM, glm::radians(angle), glm::vec3(0.0f, 1.0f, 0.0f));
+     
         mvp[2]=modelM;
-        sp.setMat4("model", modelM);
+        sp.setMat4("model", modelM); 
+        sp.setBool("hasTexture", true) ; // Enable texture rendering
         for(int i=0; i<3; i++){
             sp.setMat4("mvp["+to_string(i)+"]", mvp[i]);
             
         }
         
         
-   //     sp.setMat4("nodeTransform",anim.nodeTransformationsMap["Cube"] );
         model.animate((float)glfwGetTime(), transformations);
         for(int i=0; i<transformations.size(); i++){
-            cout << "gBones["+to_string(i)+"]";
-            cout << glm::to_string(transformations[i]);
+           
             sp.setMat4("gBones["+to_string(i)+"]", transformations[i]);
             
         }
@@ -167,7 +165,7 @@ void processInput(GLFWwindow *window)
         camera.ProcessKeyboard(LEFT, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         camera.ProcessKeyboard(RIGHT, deltaTime);
-    
+     
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes

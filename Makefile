@@ -37,7 +37,7 @@ HEADERS = glad.h \
           stb_image.h
 
 # Object files
-OBJECTS = $(SOURCES:.cpp=.o)
+OBJECTS = main.o glad.o AnimatedModel.o Animator.o Model.o Mesh.o MeshRaw.o Shader.o util.o particle.o rawMesh.o stb.o
 
 # Platform detection
 UNAME_S := $(shell uname -s)
@@ -76,6 +76,10 @@ $(TARGET): $(OBJECTS)
 
 # Compile source files to object files
 %.o: %.cpp $(HEADERS)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# Compile C files to object files
+%.o: %.c
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # Clean build artifacts

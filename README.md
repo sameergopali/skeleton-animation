@@ -61,16 +61,6 @@ skeleton-animation/
 brew install glfw glm assimp
 ```
 
-#### Ubuntu/Debian
-```bash
-sudo apt-get install libglfw3-dev libglm-dev libassimp-dev
-```
-
-#### Windows (using vcpkg)
-```bash
-vcpkg install glfw3 glm assimp
-```
-
 ### Build Instructions
 
 1. Clone the repository:
@@ -78,24 +68,11 @@ vcpkg install glfw3 glm assimp
 git clone <repository-url>
 cd skeleton-animation
 ```
-
-2. Create a build directory:
-```bash
-mkdir build
-cd build
-```
-
-3. Configure and build:
-```bash
-cmake ..
-make
-```
-
 ## Usage
 
 ### Running the Application
 ```bash
-./skeleton-animation
+make run
 ```
 
 ### Controls
@@ -107,22 +84,6 @@ make
 ### Loading Models
 The application can load various 3D model formats. Update the model path in `main.cpp`:
 
-```cpp
-// Example model loading
-Model model("path/to/your/model.obj", 1);
-// or
-Model model("path/to/animated/model.dae", 1);
-```
-
-### Supported Model Formats
-- OBJ (.obj)
-- COLLADA (.dae)
-- MD5 (.md5mesh)
-- FBX (.fbx)
-- 3DS (.3ds)
-- And other formats supported by Assimp
-
-## Implementation Details
 
 ### Animation System
 The animation system consists of several key components:
@@ -132,47 +93,7 @@ The animation system consists of several key components:
 3. **Bone Hierarchy**: Maintains parent-child relationships between bones
 4. **Interpolation**: Smooth transitions between keyframes
 
-### Shader Pipeline
-- **Vertex Shader**: Handles vertex transformations and bone influences
-- **Fragment Shader**: Processes lighting and material properties
-- **Model Loading Shaders**: Specialized shaders for model rendering
 
-### Key Features
-- **Bone Weight Calculation**: Proper vertex-bone weight assignment
-- **Animation Interpolation**: Smooth keyframe interpolation for position, rotation, and scale
-- **Hierarchical Transformations**: Correct bone hierarchy traversal
-- **Real-time Performance**: Optimized for real-time rendering
-
-## Troubleshooting
-
-### Common Issues
-
-1. **OpenGL Version Error**: Ensure your graphics card supports OpenGL 3.3+
-2. **Model Loading Failures**: Check file paths and ensure models are in supported formats
-3. **Build Errors**: Verify all dependencies are properly installed
-4. **Performance Issues**: Reduce model complexity or optimize shaders
-
-### Debug Information
-Enable debug output by setting appropriate flags in your build configuration.
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
-
-## License
-
-This project is open source. Please check individual file headers for specific licensing information.
-
-## Acknowledgments
-
-- **LearnOpenGL**: For OpenGL tutorials and examples
-- **Assimp**: For 3D model loading capabilities
-- **GLM**: For mathematics utilities
-- **GLFW**: For window management
 
 ## Future Enhancements
 
@@ -180,5 +101,4 @@ This project is open source. Please check individual file headers for specific l
 - [ ] Animation blending
 - [ ] Physics integration
 - [ ] GUI for model/animation selection
-- [ ] Performance optimizations
-- [ ] Additional rendering effects
+
